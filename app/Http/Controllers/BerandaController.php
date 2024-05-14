@@ -6,7 +6,7 @@ class BerandaController extends Controller
 {
     public function index()
     {
-
+         // tes
         return view('app.beranda.index');
     }
 }
