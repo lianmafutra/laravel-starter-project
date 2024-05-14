@@ -89,7 +89,7 @@ class MenuSidebar
             'items' => [
                [
                   'type'   => 'menu',
-                  'title'  => 'Form Component',
+                  'title'  => 'Form Component dan pengatutan',
                   'url'    => route('sample-crud.create'),
                   'icon'   => 'fas fa-folder-open',
                   'active' => ['sample-crud/create']

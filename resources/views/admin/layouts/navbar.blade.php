@@ -13,7 +13,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" id="btntheme" role="button">
+            <a class="nav-link d-none d-sm-inline-block" id="btntheme" role="button">
                 {{-- <i id="icontheme" class="fas fa-sun"></i> --}}
                 {{ \Carbon\Carbon::now()->translatedFormat('l, d-F-Y') }}
             </a>
