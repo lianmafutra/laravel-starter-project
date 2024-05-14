@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Config;
-
 class MenuSidebar
 {
    public static function render()
@@ -70,9 +68,6 @@ class MenuSidebar
             'type' => 'header',
             'title' => 'Data Master',
          ],
-        
-        
-         
          [
             'type' => 'header',
             'title' => 'Menu App',
@@ -84,9 +79,6 @@ class MenuSidebar
             'icon' => 'fas fa-home',
             'active' => ['beranda*'],
          ],
-         
-        
-       
          [
             'type'   => 'tree',
             'title'  => 'Sample Data',
@@ -126,7 +118,6 @@ class MenuSidebar
             'icon' => 'fas fa-user-alt',
             'active' => ['user/profile*'],
          ],
-        
       ]);
    }
 }
