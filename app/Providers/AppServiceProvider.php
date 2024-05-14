@@ -3,11 +3,9 @@
 namespace App\Providers;
 
 use App\Config\MenuSidebar;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -39,7 +37,6 @@ class AppServiceProvider extends ServiceProvider
          return "<?php echo \Carbon\Carbon::parse($expression)->translatedFormat('d-m-y H:m:s'); ?>";
       });
 
-
       view()->composer('admin.layouts.navbar', function ($view) {
          if (Auth::check()) {
             $view->with('fotoProfil', auth()->user()->field('foto')->getThumb());
@@ -52,13 +49,7 @@ class AppServiceProvider extends ServiceProvider
          }
       });
 
-
-
-      view()->composer('*', function ($view) {
-        
-      });
-
-    
-      
+      // view()->composer('*', function ($view) {
+      // });
    }
 }

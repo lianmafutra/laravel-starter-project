@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 // use App\Models\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\EventAuditServices;
 use App\Services\Permissions\PermissionsGate;
