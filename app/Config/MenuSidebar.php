@@ -84,7 +84,7 @@ class MenuSidebar
             'title'  => 'Sample Data',
             'url'    => '#',
             'icon'   => 'fas fa-folder-open',
-            'active' => ['sample-crud/*'],
+            'active' => ['sample-crud*'],
             'permission' => 'sample_data',
             'items' => [
                [
@@ -99,7 +99,7 @@ class MenuSidebar
                   'title'  => 'Datatable',
                   'url'    => route('sample-crud.index'),
                   'icon'   => 'fas fa-table',
-                  'active' => ['sample-crud/']
+                  'active' => ['sample-crud']
                ],
             ],
          ],
