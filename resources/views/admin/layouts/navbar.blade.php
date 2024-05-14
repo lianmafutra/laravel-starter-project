@@ -7,7 +7,7 @@
             <a href="{{ route('user.profile') }}" class="nav-link"> 
                
                <span style="font-weight: 900"> {{ auth()->user()->nama_lengkap }} </span>
-              <span class="pl-1" style="color: rgb(137, 137, 137)">( {{  auth()->user()->roles->first()->slug }} ) </span> 
+              <span class="pl-1" style="color: rgb(137, 137, 137)"> </span> 
                 </a> 
         </li>
     </ul>
