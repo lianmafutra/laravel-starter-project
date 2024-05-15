@@ -202,14 +202,7 @@
             $('#date_publisher').mask('00/00/0000');
             $('#contact').mask('0000-0000-000000');
 
-            FilePond.registerPlugin(
-                //  FilePondPluginGetFile,
-                FilePondPluginFileEncode,
-                FilePondPluginImagePreview,
-                FilePondPluginFilePoster,
-
-                FilePondPluginFileValidateType,
-                FilePondPluginFileValidateSize)
+      
 
             $('#summernote').summernote({
                 height: 200,
@@ -262,6 +255,14 @@
                 })
             })
 
+            FilePond.registerPlugin(
+                 FilePondPluginGetFile,
+                FilePondPluginFileEncode,
+                FilePondPluginImagePreview,
+                FilePondPluginFilePoster,
+                FilePondPluginFileValidateType,
+                FilePondPluginFileValidateSize)
+
             const file_pdf = FilePond.create(document.querySelector('#file_pdf'));
             file_pdf.setOptions({
                 server: {
@@ -277,20 +278,6 @@
                 allowReorder: true,
                 beforeRemoveFile: (file) => {
                     return confirm("Are You Sure Delete This File ?");
-                },
-                
-                onactivatefile: (file) => {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        const blob = new Blob([event.target.result], {
-                            type: file.type
-                        });
-                         console.log('Blob:', blob);
-                        const blobUrl = URL.createObjectURL(blob);
-                    };
-                    reader.readAsArrayBuffer(file.file);
-
-
                 },
             });
 

@@ -16,7 +16,7 @@ class SampleCrud extends Model
     use HasFactory;
    
     use LmFileTrait;
-    use HasUuids, AutoUUID;
+   //  use AutoUUID;
 
     protected $table = 'sample';
 
@@ -28,10 +28,6 @@ class SampleCrud extends Model
         'price_format',
     ];
 
-    public function getRouteKeyName()
-    {
-        return 'uuid';
-    }
 
     protected $casts = [
         'start_date' => 'datetime:d/m/Y',

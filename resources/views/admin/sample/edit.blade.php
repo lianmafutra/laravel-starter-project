@@ -9,35 +9,28 @@
 
     <link rel="stylesheet" href="{{ asset('template/admin/plugins/summernote/summernote-bs4.min.css') }}">
 
+    {{-- filepond --}}
     <link rel="stylesheet" href="{{ asset('plugins/filepond/filepond.css') }}" />
     <link rel="stylesheet" href="{{ asset('plugins/filepond/filepond-plugin-image-preview.css') }}" />
     <link rel="stylesheet" href="{{ asset('plugins/filepond/filepond-plugin-get-file.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/filepond/filepond-plugin-image-overlay.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('plugins/magnific/magnific-popup.min.css') }}" />
-
+    {{-- <link rel="stylesheet" href="{{ asset('plugins/filepond/filepond-plugin-image-overlay.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('plugins/filepond/filepond-plugin-file-poster.css') }}" />
+    {{-- filepond --}}
+
+
 
 
     <style>
-        #file_pdf .filepond--item {
-            cursor: pointer;
-        }
-
-
-        .filepond--list-scroller {
-            cursor: default;
-        }
+  
 
         @media (min-width: 576px) {
             #file_cover_multi .filepond--item {
                 width: calc(32% - 0.5em);
             }
 
-            #file_pdf .filepond--item {
-                width: calc(32% - 0.5em);
-            }
+          
         }
+
     </style>
 @endpush
 @section('header')
@@ -104,8 +97,8 @@
                     <x-filepond id="file_cover_multi" name="file_cover_multi[]" label='File Cover multiple'
                         info='( Format File JPG/PNG , Maks 5 MB)' accept="image/jpeg, image/png" multiple />
 
-                    <x-filepond id="file_pdf" name="file_pdf[]" label='File PDF' info='( Format File : pdf, word, excel Maks 5 MB )'
-                          multiple />
+                    <x-filepond id="file_pdf" name="file_pdf[]" label='File PDF'
+                        info='( Format File : pdf, word, excel Maks 5 MB )' multiple />
 
                     <x-summernote id="summernote" label="Summenote Editor" />
 
@@ -139,9 +132,8 @@
     <script src="{{ asset('plugins/filepond/filepond-plugin-file-validate-type.js') }}"></script>
     <script src="{{ asset('plugins/filepond/filepond-plugin-file-validate-size.js') }} "></script>
     <script src="{{ asset('plugins/filepond/filepond-plugin-image-preview.js') }}"></script>
-
+    {{-- <script src="{{ asset('plugins/filepond/filepond-plugin-image-overlay.js') }}"></script> --}}
     <script src="{{ asset('plugins/filepond/filepond-get-files.js') }}"></script>
-    <script src="{{ asset('plugins/magnific/jquery.magnific-popup.min.js') }}"></script>
     <script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
 
     {{-- password toggle show/hide --}}
@@ -149,7 +141,7 @@
 
     {{-- masking input currency,date input --}}
     <script src="{{ asset('plugins/jquery.mask.min.js') }}"></script>
-    <script src="{{ asset('plugins/filepond/filepond-plugin-image-overlay.js') }}"></script>
+    
     <script>
         $(function() {
             $('.select2bs4').select2({
@@ -168,17 +160,17 @@
 
             const date_publisher = flatpickr("#date_publisher", {
                 allowInput: true,
-                defaultDate: ''
+                dateFormat: "d/m/Y",
             });
 
             const start_date = flatpickr("#start_date", {
                 allowInput: true,
-                defaultDate: ''
+                dateFormat: "d/m/Y",
             });
 
             const end_date = flatpickr("#end_date", {
                 allowInput: true,
-                defaultDate: ''
+                dateFormat: "d/m/Y",
             });
 
             const time = flatpickr("#time", {
@@ -191,6 +183,7 @@
             const date_range = $("#date_range").flatpickr({
                 allowInput: true,
                 mode: "range",
+                dateFormat: "d/m/Y",
                 onChange: function(dates, dateStr, instance) {
                     if (dates.length == 2) {
                         let dateStart = instance.formatDate(dates[0], "Y-m-d");
@@ -201,16 +194,6 @@
 
             $('#date_publisher').mask('00/00/0000');
             $('#contact').mask('0000-0000-000000');
-
-            FilePond.registerPlugin(
-                //  FilePondPluginGetFile,
-                FilePondPluginFileEncode,
-                FilePondPluginImagePreview,
-                FilePondPluginFilePoster,
-                FilePondPluginImageOverlay,
-                FilePondPluginFileMetadata,
-                FilePondPluginFileValidateType,
-                FilePondPluginFileValidateSize)
 
             $('#summernote').summernote({
                 height: 200,
@@ -239,7 +222,7 @@
                 const formData = new FormData(this);
                 $.ajax({
                     type: 'POST',
-                    url: route('sample-crud.update', @json($sampleCrud->hashId)),
+                    url: route('sample-crud.update', @json($sampleCrud->id)),
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -280,25 +263,30 @@
 
             $("#summernote").summernote('code', @json($sampleCrud->summernote));
 
+
+
+            // fileponds Setup 
+
+            FilePond.registerPlugin(
+                FilePondPluginGetFile,
+                FilePondPluginFileEncode,
+                FilePondPluginImagePreview,
+                FilePondPluginFilePoster,
+               //  FilePondPluginImageOverlay,
+                FilePondPluginFileMetadata,
+                FilePondPluginFileValidateType,
+                FilePondPluginFileValidateSize)
+
             const file_pdf = FilePond.create(document.querySelector('#file_pdf'));
             file_pdf.setOptions({
-                onactivatefile: (item) => {
-                    array = ['docx','doc','xlsx','xls'];
-                    let ext = item.fileExtension.toLowerCase().trim();
-                    if (array.includes(ext)) {
-                     window.open(item.serverId, '_blank');
-                    } else {
-                     window.open(@json(url('viewpdf/web/viewer.html?url=')) + item.serverId, '_blank');
-                    }
-                },
-                beforeRemoveFile: (item) => {
-                    return new Promise((resolve, reject) => {
-                        _alertDeleteFilepond()
-                    })
+               beforeRemoveFile: (file) => {
+                    return confirm("Are You Sure Delete This File ?");
                 },
                 allowImagePreview: true,
                 allowMultiple: true,
                 allowReorder: true,
+                labelButtonDownloadItem: 'custom label', // by default 'Download file'
+                allowDownloadByUrl: true, // by default downloading by URL disabled
                 server: {
                     url: "{{ config('filepond.server.url') }}",
                     headers: {
@@ -315,14 +303,6 @@
 
             const file_cover = FilePond.create(document.querySelector('#file_cover'));
             file_cover.setOptions({
-                onactivatefile: (item) => {
-                  _showImageFilepond(item)
-                },
-                beforeRemoveFile: (item) => {
-                    return new Promise((resolve, reject) => {
-                        _alertDeleteFilepond()
-                    })
-                },
                 server: {
                     url: "{{ config('filepond.server.url') }}",
                     headers: {
@@ -332,27 +312,23 @@
                         _getFilepond(source, load)
                     }
                 },
-                files: @json($sampleCrud->field('file_cover')->getFilepond())
+                beforeRemoveFile: (file) => {
+                    return confirm("Are You Sure Delete This File ?");
+                },
+                files: @json($sampleCrud->field('file_cover')->getFilepond()),
+                allowImagePreview: true,
+                imagePreviewHeight: 200,
+                imagePreviewWidth: 200,
+          
+                allowDownloadByUrl: true, // by default downloading by URL disabled
+                allowFileTypeValidation: true,
+                acceptedFileTypes: ['image/*'],
+                labelFileTypeNotAllowed: 'File of invalid type',
             })
 
             const file_cover_multi = FilePond.create(document.querySelector('#file_cover_multi'));
-            
+
             file_cover_multi.setOptions({
-                onactivatefile: (item, index) => {
-                  _showImageFilepond(item)
-                },
-                beforeRemoveFile: (item) => {
-                    return new Promise((resolve, reject) => {
-                        _alertDeleteFilepond()
-                    })
-                },
-                styleItemPanelAspectRatio: 1,
-                imageCropAspectRatio: '1:1',
-                allowImagePreview: true,
-                allowMultiple: true,
-                allowReorder: true,
-                imagePreviewHeight: 300,
-                imagePreviewWidth: 300,
                 server: {
                     url: "{{ config('filepond.server.url') }}",
                     headers: {
@@ -362,8 +338,22 @@
                         _getFilepond(source, load)
                     }
                 },
-               
-                files: @json($sampleCrud->field('file_cover_multi')->getFileponds())
+                beforeRemoveFile: (file) => {
+                    return confirm("Are You Sure Delete This File ?");
+                },
+                files: @json($sampleCrud->field('file_cover_multi')->getFileponds()),
+                styleItemPanelAspectRatio: 1,
+                
+                imageCropAspectRatio: '1:1',
+                allowImagePreview: true,
+                allowMultiple: true,
+                labelButtonDownloadItem: 'custom label', // by default 'Download file'
+                allowDownloadByUrl: true, // by default downloading by URL disabled
+                allowReorder: false,
+                imagePreviewHeight: 300,
+                imagePreviewWidth: 300,
+                acceptedFileTypes: ['image/*'],
+                labelFileTypeNotAllowed: 'File of invalid type',
             });
         })
     </script>

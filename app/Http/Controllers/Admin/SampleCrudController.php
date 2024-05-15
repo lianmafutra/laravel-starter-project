@@ -109,33 +109,35 @@ class SampleCrudController extends Controller
         try {
 
             DB::beginTransaction();
-
+            // dd($request->safe()->all());
             $sampleCrud->fill($request->safe()->except('date_range', 'file_cover', 'file_cover_multi', 'file_pdf'))->save();
 
             SampleCrud::find($sampleCrud->id)
                 ->addFile($request->file_cover_multi)
                 ->path('cover_multi')
                 ->field('file_cover_multi')
-                ->extension(['jpg', 'png'])
-                ->withThumb(100)
-                ->compress(60)
+                ->extension(['jpg', 'png','jpeg'])
+               //  ->withThumb(100)
+               //  ->compress(60)
                 ->updateFile();
 
             SampleCrud::find($sampleCrud->id)
                 ->addFile($request->file_pdf)
                 ->path('file_pdf')
                 ->field('file_pdf')
-                   ->extension(['pdf','docx','doc','xls','xlsx'])
+               ->extension(['pdf','docx','doc','xls','xlsx'])
                 ->updateFile();
 
             SampleCrud::find($sampleCrud->id)
                 ->addFile($request->file_cover)
                 ->path('cover')
                 ->field('file_cover')
-                ->extension(['jpg', 'png'])
-                ->withThumb(100)
-                ->compress(60)
+                ->extension(['jpg', 'png','jpeg'])
+               //  ->withThumb(100)
+               //  ->compress(60)
                 ->updateFile();
+
+                DB::commit();
 
             return $this->success(__('trans.crud.success'));
         } catch (\Throwable $th) {

@@ -17,13 +17,14 @@ class SampleCrudRequest extends FormRequest
     protected function prepareForValidation(): void
     {
 
+      
         $this->merge([
             // 'category_multi_id' => json_encode($this->category_multi_id),
             'date_range_start' => DateUtils::rangeDate($this->date_range)->get('start_date'),
             'date_range_end' => DateUtils::rangeDate($this->date_range)->get('end_date'),
             'date_publisher' => DateUtils::format($this->date_publisher),
             'start_date' => DateUtils::format($this->start_date),
-              'end_date' => DateUtils::format($this->end_date),
+            'end_date' => DateUtils::format($this->end_date),
             'summernote' => $this->summernote,
           
             'contact' => trim(preg_replace('/[^0-9]/', '', $this->contact)),
