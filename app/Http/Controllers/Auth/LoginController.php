@@ -66,13 +66,13 @@ class LoginController extends Controller
                     if (auth()->user()->getRoleName() == 'superadmin') {
                         return to_route('dashboard');
                     } else {
-                        return to_route('beranda.index');
+                        return to_route('klinik.dashboard.index');
                     }
                 }
             }
         }
         throw ValidationException::withMessages([
-            $this->username() => [trans('Username / password do not match')],
+            $this->username() => [trans('Username atau Password Salah, Silahkan Coba Lagi')],
         ]);
     }
 }

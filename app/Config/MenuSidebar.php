@@ -20,7 +20,7 @@ class MenuSidebar
          ],
          [
             'type' => 'tree',
-            'title' => 'Role Permissions',
+            'title' => 'User, Role, Permissions',
             'url' => '#',
             'icon' => 'fas fa-user-shield',
             'active' => ['admin/app/*'],
@@ -67,24 +67,19 @@ class MenuSidebar
          [
             'type' => 'header',
             'title' => 'Data Master',
+            'permission' => ['role-admin'],
          ],
+        
          [
             'type' => 'header',
             'title' => 'Menu App',
          ],
          [
-            'type' => 'menu',
-            'title' => 'Beranda',
-            'url' => route('beranda.index'),
-            'icon' => 'fas fa-home',
-            'active' => ['beranda*'],
-         ],
-         [
             'type'   => 'tree',
-            'title'  => 'Sample Data',
+            'title'  => 'Example',
             'url'    => '#',
             'icon'   => 'fas fa-folder-open',
-            'active' => ['sample-crud*'],
+            'active' => ['sample-crud*', 'report/*'],
             'permission' => 'sample_data',
             'items' => [
                [
@@ -101,21 +96,28 @@ class MenuSidebar
                   'icon'   => 'fas fa-table',
                   'active' => ['sample-crud']
                ],
+               [
+                  'type' => 'menu',
+                  'title' => 'Report',
+                  'url' => route('report.report1.index'),
+                  'icon' => 'fas fa-print',
+                  'active' => ['report/*'],
+               ],
             ],
          ],
-         [
-            'type' => 'menu',
-            'title' => 'Data User',
-            'url' => route('data-user.index'),
-            'icon' => 'fas fa-users',
-            'active' => ['data-user*'],
-            'permission' => ['master-user-list'],
-         ],
+         // [
+         //    'type' => 'menu',
+         //    'title' => 'Data User',
+         //    'url' => route('data-user.index'),
+         //    'icon' => 'fas fa-users',
+         //    'active' => ['data-user*'],
+         //    'permission' => ['master-user-list'],
+         // ],
          [
             'type' => 'menu',
             'title' => 'Profile',
             'url' => route('user.profile'),
-            'icon' => 'fas fa-user-alt',
+            'icon' => 'fas fa-angle-right',
             'active' => ['user/profile*'],
          ],
       ]);

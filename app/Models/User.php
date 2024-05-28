@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Utils\LmFileTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,8 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use HasRoles;
     use LmFileTrait;
+
+    
    //  use \OwenIt\Auditing\Auditable;
   
     protected $guarded = [];
@@ -32,9 +35,9 @@ class User extends Authenticatable
    //  }
 
     protected $casts = [
-        'created_at' => 'date:d-m-Y H:m:s',
-        'updated_at' => 'date:d-m-Y H:m:s',
-        'last_login_at' => 'date:d/m/Y H:m:s',
+        'created_at' => 'date:d-m-Y H:i:s',
+        'updated_at' => 'date:d-m-Y H:i:s',
+        'last_login_at' => 'date:d/m/Y H:i:s',
     ];
 
     protected $appends = [
@@ -95,5 +98,18 @@ class User extends Authenticatable
         } else {
             return asset('img/avatar2.png');
         }
+    }
+
+
+
+    public function dokter(): HasOne
+    {
+        return $this->hasOne(Dokter::class);
+    }
+
+    
+    public function pemeriksaan(): HasOne
+    {
+        return $this->hasOne(Pemeriksaan::class,'user_id','id');
     }
 }

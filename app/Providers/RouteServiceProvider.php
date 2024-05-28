@@ -2,14 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\MasterKursus;
 use App\Models\SampleCrud;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
-use Workbench\App\Models\User;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -30,7 +28,8 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureRateLimiting();
-        Route::model('master_kursus', MasterKursus::class);
+
+     
         $this->routes(function () {
             Route::prefix('api')
                 ->middleware('api')

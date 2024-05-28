@@ -82,10 +82,16 @@
             margin-right: 30px !important;
             padding-right: 40px !important;
         }
+
+        table.dataTable {
+            font-size: 0.875rem;
+        }
+        
     </style>
 </head>
 {{-- dd --}}
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm ">
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm">
     <div class="wrapper">
         <div class="lds-ellipsis baru">
             <div></div>
@@ -99,13 +105,14 @@
                 alt="AdminLTELogo" height="60" width="60">
             <div class="loader_custom"></div>
         </div>
+
         @include('admin.layouts.navbar')
         @include('admin.layouts.sidebar')
         <div class="content-wrapper">
             @yield('header')
             <section class="content">
                 <div class="container-fluid">
-                  @yield('content')
+                    @yield('content')
                 </div>
             </section>
         </div>
@@ -115,7 +122,7 @@
         @include('admin.layouts.footer')
     </div>
 
-  
+
     <script src="{{ asset('template/admin/plugins/bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('template/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <script src="{{ asset('template/admin/dist/js/adminlte.min.js') }}"></script>
@@ -123,6 +130,9 @@
     <script src="{{ asset('plugins/sweetalert2/sweetalert2-min.js') }}"></script>
     <script src="{{ asset('js/globalFunction.js') }}"></script>
     <script src="{{ asset('plugins/idle-js/lib/idle.js') }}"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/vanilla-ripplejs@1.0.6"
+        integrity="sha384-OlarGErerEgz/M7123pQTTek4pUIiR6t0BK09bTmWDi2cZYbv3VHrriaXDnA0Oup" crossorigin="anonymous">
+    </script>
     {{-- tes --}}
     @include('admin.scripts.checkSession')
     @stack('js')
@@ -174,4 +184,5 @@
         }
     </script>
 </body>
+
 </html>

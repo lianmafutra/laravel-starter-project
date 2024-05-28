@@ -28,7 +28,7 @@ class DataUserController extends Controller
     public function index()
     {
 
-        $data = User::with('file_foto');
+        $data = User::with('file_foto', 'user_detail');
         $x['roles'] = Role::get();
         if (request()->ajax()) {
             return datatables()->of($data)
@@ -105,7 +105,7 @@ class DataUserController extends Controller
                     }
                 })
                 ->editColumn('created_at', function ($data) {
-                    return Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d/m/Y h:i:s');
+                    return Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d/m/Y H:i:s');
                 })
                 ->editColumn('type', function ($data) use ($user) {
                     if ($user->hasDirectPermission($data->name)) {

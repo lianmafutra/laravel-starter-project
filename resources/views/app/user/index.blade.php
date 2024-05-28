@@ -46,6 +46,7 @@
                     searchable: false,
                     width: '1%'
                 },
+               
                 {
                     data: 'deskripsi',
                     orderable: true,

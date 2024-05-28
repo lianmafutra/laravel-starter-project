@@ -3,7 +3,10 @@
 use App\Http\Controllers\Admin\SampleCrudController;
 use App\Http\Controllers\Admin\TinyEditorController;
 use App\Http\Controllers\BerandaController;
-use App\Http\Controllers\DataUserController;
+use App\Http\Controllers\Klinik\Dashboard\DashboarddController;
+
+
+use App\Http\Controllers\MyApp\Report\LaporanController as ReportLaporanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +24,17 @@ Route::middleware(['auth'])->group(function () {
 
    Route::post('tiny-editor/upload', [TinyEditorController::class, 'upload'])->name('tiny-editor.upload');
    Route::resource('sample-crud', SampleCrudController::class);
-   Route::resource('data-user', DataUserController::class);
-   
+
+
+  
+   Route::get('dashboard', [DashboarddController::class, 'index'])->name('klinik.dashboard.index');
+
+   Route::get('report/report1', [ReportLaporanController::class, 'report1'])->name('report.report1.index');
+   Route::get('report/report1/print', [ReportLaporanController::class, 'report1Print'])->name('report.report1.print');
+  
+
+
+
 });
+
+
